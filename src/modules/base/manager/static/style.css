@@ -1,0 +1,68 @@
+#workspace{
+    position:relative;
+    width:100%;
+    height:100vh;
+}
+
+#connections{
+    position:absolute;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+}
+
+#canvas{
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+
+.module{
+    position:absolute;
+    background:white;
+    border:2px solid #444;
+    padding:8px;
+    min-width:220px;
+}
+
+.module.running{
+    border-color:green;
+}
+
+.module-title{
+    font-weight:bold;
+    cursor:grab;
+}
+
+.module-body{
+    display:flex;
+    justify-content:space-between;
+}
+
+.ports{
+    display:flex;
+    flex-direction:column;
+}
+
+.outputs{
+    text-align:right;
+}
+
+.port{
+    cursor:pointer;
+    font-size:12px;
+}
+
+.port.input{
+    color:red;
+}
+
+.port.output{
+    color:blue;
+}
+
+#toolbar{
+    padding:10px;
+    background:#eee;
+    border-bottom:1px solid #ccc;
+}

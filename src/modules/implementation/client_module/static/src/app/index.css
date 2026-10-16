@@ -1,0 +1,187 @@
+/* Шрифты — shared/assets/fonts */
+@font-face {
+  font-family: 'Josefin-Bold';
+  src: url('../shared/assets/fonts/JosefinSans-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Josefin-SemiBold';
+  src: url('../shared/assets/fonts/JosefinSans-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Kanit';
+  src: url('../shared/assets/fonts/Kanit Cyrillic.ttf') format('truetype');
+}
+
+/* Киберпанк тёмная — electric blue + neon magenta */
+:root {
+  --arter-sidebar-bg: rgba(15, 15, 28, 0.85);
+  --arter-header-bg: rgba(18, 18, 35, 0.9);
+  --arter-main-bg: #080810;
+  --arter-accent: #60a5fa;
+  --arter-border: rgba(96, 165, 250, 0.35);
+  --arter-text-primary: #e0e7ff;
+  --arter-text-secondary: #a5b4fc;
+  --sidebar-hover-color: rgba(96, 165, 250, 0.12);
+  --connections-bg: url(/images/connections_bg_b.png);
+  --table-text-color: #e0e7ff;
+  --table-border-color: rgba(96, 165, 250, 0.3);
+  --grid-item-color: rgba(96, 165, 250, 0.25);
+  --grid-item-color-hover: rgba(96, 165, 250, 0.5);
+  --but1-bg-color: rgba(96, 165, 250, 0.2);
+  --but1-color: #60a5fa;
+  --but1-bg-color-hover: rgba(96, 165, 250, 0.4);
+  --but1-color-hover: #0a0a12;
+  --stop-bg-color: rgba(236, 72, 153, 0.3);
+  --stop-color: #ec4899;
+  --stop-bg-color-hover: rgba(236, 72, 153, 0.5);
+  --stop-color-hover: #0a0a12;
+  --input-bg-color: rgba(96, 165, 250, 0.08);
+  --input-color: #e0e7ff;
+  --input-placeholder: rgba(96, 165, 250, 0.5);
+  --sidebar-name-color: #60a5fa;
+  --sidebar-ip-color: #e0e7ff;
+  --video-bg: rgba(96, 165, 250, 0.06);
+  --video-left: #60a5fa;
+  --video-right: #60a5fa;
+  --drag-content-bg: #0d0d18;
+  --drag-content-border: rgba(96, 165, 250, 0.45);
+  --drag-text: #e0e7ff;
+}
+
+/* Светлая тема — стиль React docs */
+[data-theme='light'] {
+  --arter-sidebar-bg: #ffffff;
+  --arter-header-bg: #ffffff;
+  --arter-main-bg: #fcfcfc;
+  --arter-accent: #1878f0;
+  --arter-border: rgba(24, 120, 240, 0.25);
+  --arter-text-primary: #20232a;
+  --arter-text-secondary: #757575;
+  --sidebar-hover-color: rgba(24, 120, 240, 0.08);
+  --connections-bg: url(/images/connections_bg_l.png);
+  --table-text-color: #20232a;
+  --table-border-color: rgba(24, 120, 240, 0.2);
+  --grid-item-color: rgba(24, 120, 240, 0.15);
+  --grid-item-color-hover: rgba(24, 120, 240, 0.3);
+  --but1-bg-color: rgba(24, 120, 240, 0.12);
+  --but1-color: #1878f0;
+  --but1-bg-color-hover: rgba(24, 120, 240, 0.2);
+  --but1-color-hover: #20232a;
+  --stop-bg-color: rgba(220, 53, 69, 0.15);
+  --stop-color: #dc3545;
+  --stop-bg-color-hover: rgba(220, 53, 69, 0.25);
+  --stop-color-hover: #20232a;
+  --input-bg-color: #f0f2f4;
+  --input-color: #20232a;
+  --input-placeholder: #757575;
+  --sidebar-name-color: #20232a;
+  --sidebar-ip-color: #757575;
+  --video-bg: #f6f8fa;
+  --video-left: #1878f0;
+  --video-right: #1878f0;
+  --drag-content-bg: #ffffff;
+  --drag-content-border: rgba(24, 120, 240, 0.25);
+  --drag-text: #20232a;
+}
+
+@keyframes artex-glitch {
+  0% {
+    transform: translate(0);
+    text-shadow: 0 0 transparent, 0 0 transparent, 0 0 transparent;
+  }
+  15% {
+    transform: translate(-2px, 2px);
+    text-shadow: 2px 0 rgba(255, 0, 255, 0.8), -2px 0 rgba(0, 255, 255, 0.8);
+  }
+  30% {
+    transform: translate(2px, -2px);
+    text-shadow: -3px 0 rgba(0, 255, 255, 0.8), 3px 0 rgba(255, 0, 255, 0.8);
+  }
+  45% {
+    transform: translate(-1px, -1px);
+    text-shadow: 1px 1px rgba(255, 0, 255, 0.6), -1px -1px rgba(0, 255, 255, 0.6);
+  }
+  60% {
+    transform: translate(2px, 1px);
+    text-shadow: -2px 0 rgba(255, 0, 255, 0.6), 2px 0 rgba(0, 255, 255, 0.6);
+  }
+  75% {
+    transform: translate(-1px, 1px);
+    text-shadow: 1px 0 rgba(0, 255, 255, 0.5), -1px 0 rgba(255, 0, 255, 0.5);
+  }
+  100% {
+    transform: translate(0);
+    text-shadow: 0 0 transparent, 0 0 transparent, 0 0 transparent;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Плавная анимация при смене темы (как в старом проекте) */
+html,
+body,
+#root,
+#root * {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    fill 0.4s ease,
+    background 0.4s ease;
+}
+
+/* Без transition для color — исключает мелькание ARTEX/framework при смене темы */
+#root .artex-logo,
+#root .artex-logo * {
+  transition-property: background-color, border-color, fill, background;
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Kanit', 'Josefin Sans', 'Josefin-Bold', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+  overflow: hidden;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Утилиты */
+.hidden {
+  display: none !important;
+}
+
+.active {
+  display: block;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,7 @@
+{
+  "target_area_percent": 18.0,
+  "center_tolerance": 0.9,
+  "center_bias": 0.0,
+  "smoothing_alpha": 0.4,
+  "lost_frames_limit": 5
+}
