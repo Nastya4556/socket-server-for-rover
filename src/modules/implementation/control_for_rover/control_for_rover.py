@@ -8,7 +8,6 @@ from datetime import datetime
 import time
 from pathlib import Path
 import math
-import json
 
 @infinite_loop(0.02)
 class ControlForRoverModule(BaseModule):
@@ -39,7 +38,7 @@ class ControlForRoverModule(BaseModule):
         self._ticks_lifted = [0, 0, 0, 0]
         self._ticks_for_check_hanging = [0, 0, 0, 0]
         self._ticks_lifted_threshold = 100
-        self._ticks_for_check_hanging_threshold = 3
+        self._ticks_for_check_hanging_threshold = 1
 
         self._ticks_for_check_grounded = 0
         self._step_for_momentum = 20
@@ -171,31 +170,21 @@ class ControlForRoverModule(BaseModule):
             self._prev_angle_rads[i] = angle_rad
             self._prev_unwrapped[i] = unwrapped
 
-        # if len(deltas) > 0:
-        #     positive = [a for a in deltas if a > 0]
-        #
-        #     if positive:
-        #         car_velocity = min(positive)
-        #     else:
-        #         car_velocity = self._min_v_car
-        # else:
-        #     car_velocity = self._min_v_car
+        if len(deltas) > 0:
+            positive = [a for a in deltas if a > 0]
 
-
-        # 1 вариант
-        abs_deltas = [abs(d) for d in deltas]
-        car_velocity = min(abs_deltas)
-
-        #2 вариант
-        # held = [i for i in range(4) if self._is_system_work and self._ticks_lifted[i] > 0]
-        # free = [abs(deltas[i]) for i in range(4) if i not in held]
-        # car_velocity = min(free) if free else self._min_v_car
+            if positive:
+                car_velocity = min(positive)
+            else:
+                car_velocity = self._min_v_car
+        else:
+            car_velocity = self._min_v_car
+        # abs_deltas = [abs(d) for d in deltas]
+        # moving = [d for d in abs_deltas if d > 1e-6]
+        # car_velocity = min(moving) if moving else self._min_v_car
 
         for i in range(len(deltas)):
-            # 2 вариант
-            # if i in held:
-            #     lifted.append(i)
-
+            # print(deltas[i] - car_velocity)
             if abs(abs(deltas[i]) - car_velocity) > self._eps_for_acceleration_difference:# и может доавить что скорость колеса больше определенной
                 lifted.append(i)
             else:
@@ -220,11 +209,11 @@ class ControlForRoverModule(BaseModule):
                 self._ticks_lifted[i] += 1
 
                 if self._ticks_lifted[i] >= self._ticks_lifted_threshold:
-                    momentum[i] = current_gas
+                    momentum[i] = 1300
                     self._ticks_for_check_hanging[i] += 1
 
                     if self._ticks_for_check_hanging[i] >= self._ticks_for_check_hanging_threshold:
-                        if abs(deltas[i]) < self._critical_angular_acceleration and abs(abs(deltas[i]) - car_velocity) < self._eps_for_acceleration_difference:
+                        if abs(deltas[i]) < self._critical_angular_acceleration and abs(car_velocity) - deltas[i] < self._eps_for_acceleration_difference:
                             returned.append(i)
 
                         self._ticks_lifted[i] = 0
@@ -269,20 +258,18 @@ class ControlForRoverModule(BaseModule):
                     momentum[i] = current_gas
 
             self._prev_gas = current_gas
+            value = int(np.clip(momentum[0], 1000, 2000))
             momentum = [int(np.clip(momentum[0], 1000, 2000)), int(np.clip(momentum[1], 1000, 2000)), int(np.clip(momentum[2], 1000, 2000)), int(np.clip(momentum[3], 1000, 2000))]
         elif self._is_system_work == False:
             print("system don't work")
-            value = int(np.clip(current_gas, 1200, 1800))
+            value = np.clip(current_gas, 1300, 1700)
             momentum = [value, value, value, value]
-            self._prev_momentum_deltas = [None] * 4
-            self._ticks_lifted = [0] * 4
-            self._ticks_for_check_hanging = [0] * 4
-            self._prev_gas = current_gas
 
         #------------------------------------------------------------------
         # print(buf)
-        all_current = 400
-        buf = f'{{"all_current": {all_current},"tl": {momentum[0]}, "tr": {momentum[1]}, "bl":{momentum[2]},  "br": {momentum[3]}, "st": {current_turning}}}'
+        all_current = 800
+        all_rpm = 10000
+        buf = f'{{"all_rpm": {all_rpm}, "all_current": {all_current},"tl": {momentum[0]}, "tr": {momentum[1]}, "bl":{momentum[2]},  "br": {momentum[3]}, "st": {current_turning}}}'
         message = {"com": buf}
         print(buf)
 
